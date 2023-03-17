@@ -1,18 +1,23 @@
-import "./ColorSlider.css"
-import React from "react"
+import "./ColorSlider.css";
+import React from "react";
 
-const ColorSlider =({baseColor, colorName} )=> {
-    
-    return <div>
-        <label htmlFor={baseColor}>{colorName}</label>
-		<input
+const ColorSlider = ({ baseColor, colorName, value, onValueChange }) => {
+  const className = `slider slider--${baseColor}`;
+
+  return (
+    <>
+      <label htmlFor={baseColor}>{colorName}</label>
+      <input
         type="range"
-        className="slider slider--{{baseColor}}"
+        className={className}
         id="redSlider"
         min="0"
         max="255"
-        defaultValue="0"
-      /></div>
-}
+        value={value}
+        onChange={onValueChange}
+      />
+    </>
+  );
+};
 
-export default ColorSlider
+export default ColorSlider;

@@ -1,64 +1,66 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import ColorSlider from './components/ColorSlider/ColorSlider';
-import './style.css';
-import { useState } from 'react';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import ColorSlider from "./components/ColorSlider/ColorSlider";
+import "./style.css";
+import { useState } from "react";
 
+function App() {
+  const [redValue, setRedValue] = useState(0);
+  const [greenValue, setGreenValue] = useState(0);
+  const [blueValue, setBlueValue] = useState(0);
+  const [color, setColor] = useState("rgb(0, 0, 0)");
 
-const App = () => {
+  const handleRedChange = (event) => {
+    const value = event.target.value;
+    setRedValue(value);
+    updateColor(value, greenValue, blueValue);
+  };
 
-  const [redValue,setRedValue] =useState ("")
-  const [greenValue,setGreenValue] =useState ("")
-  const [blueValue,setBlueValue] =useState ("")
+  const handleGreenChange = (event) => {
+    const value = event.target.value;
+    setGreenValue(value);
+    updateColor(redValue, value, blueValue);
+  };
 
+  const handleBlueChange = (event) => {
+    const value = event.target.value;
+    setBlueValue(value);
+    updateColor(redValue, greenValue, value);
+  };
+
+  const updateColor = (red, green, blue) => {
+    const color = `rgb(${red}, ${green}, ${blue})`;
+    setColor(color);
+  };
 
   return (
-    <div className="container">
-      <header>
-        
-      </header>
-      <main>
-   
-	<div className='color-panel'>
-		<h1>Mixér barev</h1>
-		<div className='sliders'>
-
-
-      <ColorSlider baseColor="red" colorName="Červená" key = "red" />
-      <ColorSlider baseColor="green" colorName="Zelená" key = "green"/>
-      <ColorSlider baseColor="blue" colorName="Modrá" key ="blue"/>
-
-<label htmlFor='green'>Zelená</label>
-			<input
-        type="range"
-        className='slider slider--green'
-        id="greenSlider"
-        min="0"
-        max="255"
-        value="0"
-      />
-
-<label htmlFor='blue'>Modrá</label>
-			<input
-        type="range"
-        className='slider slider--blue'
-        id="blueSlider"
-        min="0"
-        max="255"
-        value="0"
-      />
-		</div>
-		<div className="color-box" id="color-box"></div>
-	</div>
-
-      </main>
-      <footer>
-       
-      </footer>
+    <div className="App">
+      <div class="color-panel">
+        <h1>Mixér barev</h1>
+        <div className="sliders">
+          <ColorSlider
+            baseColor="red"
+            colorName="Červená"
+            value={redValue}
+            onValueChange={handleRedChange}
+          />
+          <ColorSlider
+            baseColor="green"
+            colorName="Zelená"
+            value={greenValue}
+            onValueChange={handleGreenChange}
+          />
+          <ColorSlider
+            baseColor="blue"
+            colorName="Modrá"
+            value={blueValue}
+            onValueChange={handleBlueChange}
+          />
+        </div>
+        <div className="color-box" style={{ backgroundColor: color }}></div>
+      </div>
     </div>
   );
-};
+}
 
-createRoot(
-  document.querySelector('#app'),
-).render(<App />);
+createRoot(document.querySelector("#app")).render(<App />);
